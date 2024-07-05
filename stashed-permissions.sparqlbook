@@ -1,0 +1,56 @@
+[
+  {
+    "kind": 1,
+    "language": "markdown",
+    "value": "# Investigate permissions issues caused by value stashing of DSP-TOOLS",
+    "metadata": {}
+  },
+  {
+    "kind": 1,
+    "language": "markdown",
+    "value": "## Get an overview of all projects",
+    "metadata": {}
+  },
+  {
+    "kind": 2,
+    "language": "sparql",
+    "value": "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX kb: <http://www.knora.org/ontology/knora-base#>\n\nSELECT DISTINCT ?graph (COUNT(?value) as ?counter)\nWHERE {\n  GRAPH <http://www.knora.org/ontology/knora-base> {\n    ?valueType rdfs:subClassOf* kb:Value .\n  }\n  GRAPH ?graph {\n    ?value a ?valueType .\n    ?value kb:hasPermissions \"CR knora-admin:ProjectAdmin|M knora-admin:ProjectMember\" .\n  }\n} GROUP BY ?graph",
+    "metadata": {}
+  },
+  {
+    "kind": 1,
+    "language": "markdown",
+    "value": "## Find the different value permissions used in a project",
+    "metadata": {}
+  },
+  {
+    "kind": 2,
+    "language": "sparql",
+    "value": "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX kb: <http://www.knora.org/ontology/knora-base#>\n\nSELECT ?permission (COUNT(?permission) as ?counter) WHERE {\n  GRAPH <http://www.knora.org/ontology/knora-base> {\n    ?valueType rdfs:subClassOf* kb:Value .\n  }\n  GRAPH <http://www.knora.org/data/0810/dasch> {\n    ?value a ?valueType ;\n              kb:hasPermissions ?permission .\n }\n} GROUP BY ?permission",
+    "metadata": {}
+  },
+  {
+    "kind": 1,
+    "language": "markdown",
+    "value": "## Get the distribution of permissions per value type",
+    "metadata": {}
+  },
+  {
+    "kind": 2,
+    "language": "sparql",
+    "value": "PREFIX kb: <http://www.knora.org/ontology/knora-base#>\n\nSELECT DISTINCT ?resourceType ?pToValue ?valueType ?permission (COUNT(?permission) as ?permissionCount) WHERE {\n    GRAPH <http://www.knora.org/data/0810/dasch> {\n        ?s a ?resourceType ;\n           ?pToValue ?value .\n        ?value a ?valueType ;\n               kb:hasPermissions ?permission .\n    }\n}\nGROUP BY ?resourceType ?pToValue ?valueType ?permission\nORDER BY ?resourceType ?pToValue ?valueType ?permission\n",
+    "metadata": {}
+  },
+  {
+    "kind": 1,
+    "language": "markdown",
+    "value": "## Get the distribution of permissions per creator and creation date",
+    "metadata": {}
+  },
+  {
+    "kind": 2,
+    "language": "sparql",
+    "value": "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\nPREFIX kb: <http://www.knora.org/ontology/knora-base#>\nPREFIX knora-admin: <http://www.knora.org/ontology/knora-admin#>\n\nSELECT DISTINCT (xsd:date(?date) as ?day) ?username ?permission WHERE {\n  GRAPH <http://www.knora.org/data/0810/dasch> {\n    ?value kb:valueCreationDate ?date .\n    ?value kb:attachedToUser ?user .\n    ?value kb:hasPermissions ?permission .\n  }\n  GRAPH <http://www.knora.org/data/admin> {\n    ?user knora-admin:email ?username .\n  }\n}\nGROUP BY ?date ?username ?permission\nORDER BY DESC (?day)",
+    "metadata": {}
+  }
+]
