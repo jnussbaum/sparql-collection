@@ -1,0 +1,68 @@
+[
+  {
+    "kind": 1,
+    "language": "markdown",
+    "value": "## Get all graphs of a server",
+    "metadata": {}
+  },
+  {
+    "kind": 2,
+    "language": "sparql",
+    "value": "SELECT DISTINCT ?g WHERE {\n    GRAPH ?g { }\n}",
+    "metadata": {}
+  },
+  {
+    "kind": 2,
+    "language": "sparql",
+    "value": "PREFIX kb: <http://www.knora.org/ontology/knora-base#>\n\nSELECT DISTINCT ?perm WHERE {\n    GRAPH <http://www.knora.org/data/0826/wordweb> {\n        ?s kb:hasPermissions ?perm .\n    }\n}",
+    "metadata": {}
+  },
+  {
+    "kind": 1,
+    "language": "markdown",
+    "value": "## Retrieve a certain Administrative Permission from the permissions graph",
+    "metadata": {}
+  },
+  {
+    "kind": 2,
+    "language": "sparql",
+    "value": "PREFIX knora-admin: <http://www.knora.org/ontology/knora-admin#>\n\nSELECT * WHERE {\n    GRAPH <http://www.knora.org/data/permissions> {\n        <http://rdfh.ch/permissions/F18E/JUY5IEcBTamqTQcjP9VI9Q> ?p ?o .\n    }\n}",
+    "metadata": {}
+  },
+  {
+    "kind": 1,
+    "language": "markdown",
+    "value": "## Get all knora-base resources of a project",
+    "metadata": {}
+  },
+  {
+    "kind": 2,
+    "language": "sparql",
+    "value": "PREFIX kb: <http://www.knora.org/ontology/knora-base#>\n\nSELECT * WHERE {\n    GRAPH <http://www.knora.org/data/0806/webern> {\n        {?res a kb:LinkObj} #UNION {?res a kb:Region} UNION {?res a kb:Annotation} UNION {?res a kb:AudioSegment} UNION {?res a kb:VideoSegment}\n    }\n}\n\n# GRAPH <http://www.knora.org/data/F18E/johannes-playground> {",
+    "metadata": {}
+  },
+  {
+    "kind": 1,
+    "language": "markdown",
+    "value": "## Get an overview of all distinct OAPS on a server",
+    "metadata": {}
+  },
+  {
+    "kind": 2,
+    "language": "sparql",
+    "value": "PREFIX kb: <http://www.knora.org/ontology/knora-base#>\n\nSELECT DISTINCT ?perm (COUNT(?perm) as ?counter) WHERE {\n    ?s kb:hasPermissions ?perm .\n}\nGROUP BY ?perm ?counter\nORDER BY DESC(?counter)",
+    "metadata": {}
+  },
+  {
+    "kind": 1,
+    "language": "markdown",
+    "value": "## Get OAPs of non-deleted resources/values",
+    "metadata": {}
+  },
+  {
+    "kind": 2,
+    "language": "sparql",
+    "value": "PREFIX kb: <http://www.knora.org/ontology/knora-base#>\nPREFIX ka: <http://www.knora.org/ontology/knora-admin#>\n\nSELECT ?s ?type WHERE {\n  GRAPH <http://www.knora.org/data/0826/wordweb> {\n  \t?s kb:hasPermissions \"CR knora-admin:ProjectAdmin|M knora-admin:ProjectMember\" ;\n      \tkb:isDeleted false ;\n       a ?type .\n  }\n}",
+    "metadata": {}
+  }
+]
