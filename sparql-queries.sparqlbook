@@ -1,0 +1,146 @@
+[
+  {
+    "kind": 1,
+    "language": "markdown",
+    "value": "# My SPARQL query collection",
+    "metadata": {}
+  },
+  {
+    "kind": 1,
+    "language": "markdown",
+    "value": "## Get all graphs on a DSP server",
+    "metadata": {}
+  },
+  {
+    "kind": 2,
+    "language": "sparql",
+    "value": "SELECT * WHERE {\n  GRAPH ?g { }\n}",
+    "metadata": {}
+  },
+  {
+    "kind": 1,
+    "language": "markdown",
+    "value": "## Get all projects on a DSP server",
+    "metadata": {}
+  },
+  {
+    "kind": 2,
+    "language": "sparql",
+    "value": "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX kb: <http://www.knora.org/ontology/knora-base#>\nPREFIX knora-admin: <http://www.knora.org/ontology/knora-admin#>\n\nSELECT ?project ?shortcode ?longname WHERE {\n  GRAPH <http://www.knora.org/data/admin> {\n    ?project a knora-admin:knoraProject .\n    ?project knora-admin:projectShortcode ?shortcode .\n    ?project knora-admin:projectLongname ?longname .\n }\n} \nGROUP BY ?project ?shortcode ?longname",
+    "metadata": {}
+  },
+  {
+    "kind": 1,
+    "language": "markdown",
+    "value": "## Find the resources of webern that have wrong permissions",
+    "metadata": {}
+  },
+  {
+    "kind": 2,
+    "language": "sparql",
+    "value": "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX owl: <http://www.w3.org/2002/07/owl#>\nPREFIX kb: <http://www.knora.org/ontology/knora-base#>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\n\nSELECT distinct ?resourceType ?pToValue WHERE {\n  GRAPH <http://www.knora.org/ontology/0806/webern-onto> {\n    ?resourceType rdfs:subClassOf* kb:Resource .\n  }\n  GRAPH <http://www.knora.org/data/0806/webern> {\n    ?s a ?resourceType ;\n       ?pToValue ?value .\n    ?value a ?valueType ;\n           kb:hasPermissions \"CR knora-admin:ProjectAdmin|M knora-admin:ProjectMember\" .\n  }\n} limit 10",
+    "metadata": {}
+  },
+  {
+    "kind": 2,
+    "language": "sparql",
+    "value": "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX owl: <http://www.w3.org/2002/07/owl#>\nPREFIX kb: <http://www.knora.org/ontology/knora-base#>\n\nSELECT distinct ?valuetype ?permission WHERE {\n  GRAPH <http://www.knora.org/ontology/knora-base> {\n    ?valuetype rdfs:subClassOf* kb:Value\n  }\n  \n  GRAPH <http://www.knora.org/data/0806/webern> {\n    ?s a ?valuetype ;\n  \t   kb:hasPermissions ?permission .\n  }\n}",
+    "metadata": {}
+  },
+  {
+    "kind": 2,
+    "language": "sparql",
+    "value": "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX owl: <http://www.w3.org/2002/07/owl#>\nPREFIX kb: <http://www.knora.org/ontology/knora-base#>\n\nSELECT distinct ?s WHERE {\n  GRAPH <http://www.knora.org/ontology/knora-base> {\n    ?valuetype rdfs:subClassOf* kb:Value\n  }\n  \n  GRAPH <http://www.knora.org/data/0806/webern> {\n    ?s a ?valuetype ;\n  \t   kb:hasPermissions \"CR knora-admin:ProjectAdmin|M knora-admin:ProjectMember\" .\n  }\n}",
+    "metadata": {}
+  },
+  {
+    "kind": 2,
+    "language": "sparql",
+    "value": "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX kb: <http://www.knora.org/ontology/knora-base#>\n\nSELECT distinct ?s ?date WHERE {  \n  GRAPH <http://www.knora.org/data/0806/webern> {\n    ?s kb:hasPermissions \"CR knora-admin:ProjectAdmin|M knora-admin:ProjectMember\" ;\n       kb:creationDate ?date .\n  }\n}",
+    "metadata": {}
+  },
+  {
+    "kind": 2,
+    "language": "sparql",
+    "value": "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX kb: <http://www.knora.org/ontology/knora-base#>\n\nSELECT ?s (MAX (?date) as ?maxdate) WHERE {\n  GRAPH <http://www.knora.org/data/0806/webern> {\n    ?s kb:valueCreationDate ?date\n  }\n} GROUP BY ?maxdate ?s\nORDER BY DESC (?maxdate)\nLIMIT 25",
+    "metadata": {}
+  },
+  {
+    "kind": 2,
+    "language": "sparql",
+    "value": "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX kb: <http://www.knora.org/ontology/knora-base#>\n\nSELECT * WHERE {\n  GRAPH <http://www.knora.org/data/0806/webern> {\n    <http://rdfh.ch/0806/D7Rm_RFPRZWoRuPzciczrQ> <http://www.knora.org/ontology/0806/webern-onto#hasPerformanceValue> ?o .\n    ?o kb:hasPermissions ?oo .\n  }\n}",
+    "metadata": {}
+  },
+  {
+    "kind": 2,
+    "language": "sparql",
+    "value": "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX kb: <http://www.knora.org/ontology/knora-base#>\n\nSELECT * WHERE {\n  GRAPH <http://www.knora.org/data/0806/webern> {\n    <http://rdfh.ch/0806/D7Rm_RFPRZWoRuPzciczrQ> <http://www.knora.org/ontology/0806/webern-onto#hasPerformanceValue> ?o .\n    ?o ?p ?oo .\n  }\n} ",
+    "metadata": {}
+  },
+  {
+    "kind": 2,
+    "language": "sparql",
+    "value": "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX owl: <http://www.w3.org/2002/07/owl#>\nPREFIX kb: <http://www.knora.org/ontology/knora-base#>\n\nSELECT * WHERE {\n  GRAPH <http://www.knora.org/data/0806/webern> {\n    ?val kb:previousValue ?previous ;\n         kb:valueCreationDate ?date ;\n         kb:hasPermissions ?currentPermissions .\n    OPTIONAL {?previous kb:hasPermissions ?permissions .}\n  }\n}",
+    "metadata": {}
+  },
+  {
+    "kind": 2,
+    "language": "sparql",
+    "value": "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX owl: <http://www.w3.org/2002/07/owl#>\nPREFIX kb: <http://www.knora.org/ontology/knora-base#>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\n\nSELECT (?date AS ?day) (COUNT(?subject) AS ?count)\nWHERE {\n          GRAPH <http://www.knora.org/data/0806/webern> {\n        \n  ?subject kb:creationDate ?dateTime .\n  BIND (STRDT(STR(?dateTime), xsd:date) AS ?date) # Extracting the date part\n  }\n}\nGROUP BY ?date\nORDER BY ?date",
+    "metadata": {}
+  },
+  {
+    "kind": 1,
+    "language": "markdown",
+    "value": "## See what permissions a project has",
+    "metadata": {}
+  },
+  {
+    "kind": 2,
+    "language": "sparql",
+    "value": "SELECT distinct ?obj WHERE {\n    GRAPH <http://www.knora.org/data/F18E/johannes-playground> {\n        ?sub knora-base:hasPermissions ?obj .\n    }\n}",
+    "metadata": {}
+  },
+  {
+    "kind": 1,
+    "language": "markdown",
+    "value": "## Replace permissions",
+    "metadata": {}
+  },
+  {
+    "kind": 2,
+    "language": "sparql",
+    "value": "INSERT {\n  GRAPH <http://www.knora.org/data/080C/fotoarchivkunsthalle> {\n    ?sub knora-base:hasPermissions \"CR knora-admin:Creator,knora-admin:ProjectAdmin|D knora-admin:ProjectMember|V knora-admin:KnownUser|RV knora-admin:UnknownUser\" .\n  }\n} WHERE {\n  GRAPH <http://www.knora.org/data/080C/fotoarchivkunsthalle> {\n    ?sub knora-base:hasPermissions ?obj .\n  }\n} ;\nDELETE {\n  GRAPH <http://www.knora.org/data/080C/fotoarchivkunsthalle> {\n    ?sub knora-base:hasPermissions ?permDel .\n  }\n} WHERE {\n  GRAPH <http://www.knora.org/data/080C/fotoarchivkunsthalle> {\n    ?sub knora-base:hasPermissions ?permDel .\n      VALUES ?permDel { \"CR knora-admin:Creator,knora-admin:ProjectAdmin|D knora-admin:ProjectMember|V knora-admin:KnownUser,knora-admin:UnknownUser\" }\n  }\n}",
+    "metadata": {}
+  },
+  {
+    "kind": 1,
+    "language": "markdown",
+    "value": "",
+    "metadata": {}
+  },
+  {
+    "kind": 2,
+    "language": "sparql",
+    "value": "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX beol: <http://www.knora.org/ontology/0801/beol#>\nPREFIX text: <http://jena.apache.org/text#>\nPREFIX knora-admin: <http://www.knora.org/ontology/knora-admin#>\nPREFIX knora-base: <http://www.knora.org/ontology/knora-base#>\nPREFIX xsd:        <http://www.w3.org/2001/XMLSchema#>\nPREFIX owl:         <http://www.w3.org/2002/07/owl#> \n\nSELECT * WHERE {\n  ?s   a owl:Ontology ;\n       knora-base:attachedToProject ?p .\n  \n  ?p   a knora-admin:knoraProject ;\n       knora-admin:projectShortcode \"1234\".\n} LIMIT 10",
+    "metadata": {}
+  },
+  {
+    "kind": 2,
+    "language": "sparql",
+    "value": "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX kb: <http://www.knora.org/ontology/knora-base#>\n\nSELECT ?s ?pToValue ?value WHERE {\n  GRAPH <http://www.knora.org/ontology/0812/ekws> {\n    ?resourceType rdfs:subClassOf* kb:Resource .\n  }\n  GRAPH <http://www.knora.org/data/0812/ekws> {\n    ?s a ?resourceType ;\n       ?pToValue ?value .\n    ?value kb:hasPermissions \"CR knora-admin:ProjectAdmin|M knora-admin:ProjectMember\" .\n }\n}",
+    "metadata": {}
+  },
+  {
+    "kind": 2,
+    "language": "sparql",
+    "value": "SELECT ?s ?p ?o WHERE {\n    GRAPH <http://www.knora.org/data/0118/rome-siecles-obscurs> {\n        {\n            BIND(<http://www.knora.org/ontology/0118/rome-siecles-obscurs#hasRelatedWork> as ?p) . \n            ?s ?p ?o .\n        } UNION {\n            BIND(<http://www.knora.org/ontology/0118/rome-siecles-obscurs#hasRelatedWorkValue> as ?p) .\n            ?s ?p ?o . \n        }\n    }\n} \nORDER BY ?s",
+    "metadata": {}
+  },
+  {
+    "kind": 2,
+    "language": "sparql",
+    "value": "PREFIX kb: <http://www.knora.org/ontology/knora-base#>\nPREFIX salsah-gui: <http://www.knora.org/ontology/salsah-gui#>\nSELECT * WHERE {\n  GRAPH ?graph { \n  ?property kb:objectClassConstraint kb:ListValue ;\n            salsah-gui:guiAttribute ?listIRI .\n  }\n} LIMIT 10",
+    "metadata": {}
+  }
+]

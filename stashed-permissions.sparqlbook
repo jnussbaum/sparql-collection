@@ -52,5 +52,17 @@
     "language": "sparql",
     "value": "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\nPREFIX kb: <http://www.knora.org/ontology/knora-base#>\nPREFIX knora-admin: <http://www.knora.org/ontology/knora-admin#>\n\nSELECT DISTINCT (xsd:date(?date) as ?day) ?username ?permission WHERE {\n  GRAPH <http://www.knora.org/data/0810/dasch> {\n    ?value kb:valueCreationDate ?date .\n    ?value kb:attachedToUser ?user .\n    ?value kb:hasPermissions ?permission .\n  }\n  GRAPH <http://www.knora.org/data/admin> {\n    ?user knora-admin:email ?username .\n  }\n}\nGROUP BY ?date ?username ?permission\nORDER BY DESC (?day)",
     "metadata": {}
+  },
+  {
+    "kind": 1,
+    "language": "markdown",
+    "value": "## Get all permissions of a project",
+    "metadata": {}
+  },
+  {
+    "kind": 2,
+    "language": "sparql",
+    "value": "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX kb: <http://www.knora.org/ontology/knora-base#>\n\nSELECT DISTINCT ?perm (COUNT(?perm) as ?count) WHERE {\n  GRAPH <http://www.knora.org/data/0847/locusludi> {\n    ?s kb:hasPermissions ?perm .\n  }\n} GROUP BY ?perm ?count",
+    "metadata": {}
   }
 ]
