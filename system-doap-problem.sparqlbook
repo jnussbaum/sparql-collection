@@ -1,0 +1,26 @@
+[
+  {
+    "kind": 1,
+    "language": "markdown",
+    "value": "## All system DOAPs of a server",
+    "metadata": {}
+  },
+  {
+    "kind": 2,
+    "language": "sparql",
+    "value": "PREFIX kb: <http://www.knora.org/ontology/knora-base#>\nPREFIX knora-admin: <http://www.knora.org/ontology/knora-admin#>\n\nSELECT ?s ?p ?o WHERE {\n  GRAPH ?g {\n    ?s a knora-admin:DefaultObjectAccessPermission ;\n       knora-admin:forProject knora-admin:SystemProject ;\n       ?p ?o .\n  }\n}",
+    "metadata": {}
+  },
+  {
+    "kind": 1,
+    "language": "markdown",
+    "value": "## Affected resources/values",
+    "metadata": {}
+  },
+  {
+    "kind": 2,
+    "language": "sparql",
+    "value": "PREFIX kb: <http://www.knora.org/ontology/knora-base#>\nPREFIX knora-admin: <http://www.knora.org/ontology/knora-admin#>\n\nSELECT ?res_or_val WHERE {\n  GRAPH ?g {\n    ?res_or_val kb:hasPermissions \"M knora-admin:Creator,knora-admin:ProjectMember|V knora-admin:KnownUser|RV knora-admin:UnknownUser\" .\n  }\n}\nORDER BY ?res_or_val",
+    "metadata": {}
+  }
+]
