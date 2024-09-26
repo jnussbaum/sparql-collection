@@ -26,7 +26,7 @@
   {
     "kind": 2,
     "language": "sparql",
-    "value": "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX kb: <http://www.knora.org/ontology/knora-base#>\n\nSELECT ?permission (COUNT(?permission) as ?counter) (MIN (?date) as ?min) (MAX (?date) as ?max) WHERE {\n  GRAPH <http://www.knora.org/ontology/knora-base> {\n    ?valueType rdfs:subClassOf* kb:Value .\n  }\n  GRAPH <http://www.knora.org/data/0810/dasch> {\n    ?value a ?valueType .\n    ?value kb:hasPermissions ?permission .\n    ?value kb:valueCreationDate ?date .\n }\n} GROUP BY ?permission",
+    "value": "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX kb: <http://www.knora.org/ontology/knora-base#>\n\nSELECT ?permission (COUNT(?permission) as ?counter) ?what (MIN (?date) as ?min) (MAX (?date) as ?max) WHERE {\n  GRAPH <http://www.knora.org/ontology/knora-base> {\n    ?valueType rdfs:subClassOf* kb:Value .\n  }\n  GRAPH <http://www.knora.org/data/0828/biz> {\n    ?value a ?valueType .\n    ?value kb:hasPermissions ?permission .\n    ?value kb:valueCreationDate ?date .\n    ?value a ?what\n }\n} GROUP BY ?permission ?what",
     "metadata": {}
   },
   {
