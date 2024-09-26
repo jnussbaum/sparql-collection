@@ -70,5 +70,17 @@
     "language": "sparql",
     "value": "PREFIX kb: <http://www.knora.org/ontology/knora-base#>\n\nSELECT * WHERE {\n    GRAPH <http://www.knora.org/data/0806/webern> {\n        {?res a kb:LinkObj} #UNION {?res a kb:Region} UNION {?res a kb:Annotation} UNION {?res a kb:AudioSegment} UNION {?res a kb:VideoSegment}\n    }\n}\n\n# GRAPH <http://www.knora.org/data/F18E/johannes-playground> {",
     "metadata": {}
+  },
+  {
+    "kind": 1,
+    "language": "markdown",
+    "value": "## Verify if the permissions-scripts caught all OAPs of a project",
+    "metadata": {}
+  },
+  {
+    "kind": 2,
+    "language": "sparql",
+    "value": "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX kb: <http://www.knora.org/ontology/knora-base#>\n\nSELECT DISTINCT ?perm (COUNT(?perm) as ?count) WHERE {\n  GRAPH <http://www.knora.org/data/0838/geoarch> {\n    ?s kb:hasPermissions ?perm ;\n       kb:isDeleted false .\n    FILTER NOT EXISTS {\n      ?s rdf:predicate kb:hasStandoffLinkTo .\n    }\n    FILTER NOT EXISTS {\n      ?res kb:isDeleted true ;\n           ?p ?s .\n    }\n  }\n} GROUP BY ?perm ?count",
+    "metadata": {}
   }
 ]
