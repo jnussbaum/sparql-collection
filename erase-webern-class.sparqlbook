@@ -1,0 +1,14 @@
+[
+  {
+    "kind": 2,
+    "language": "sparql",
+    "value": "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX kb: <http://www.knora.org/ontology/knora-base#>\n\nSELECT ?res ?p ?type WHERE {\n  GRAPH <http://www.knora.org/data/0806/webern> {\n    ?res a ?type .\n    ?res ?p <http://rdfh.ch/0806/eD83lLUSSYCbEOb5B5cknQ> .\n  }\n}",
+    "metadata": {}
+  },
+  {
+    "kind": 2,
+    "language": "sparql",
+    "value": "SELECT ?p ?o WHERE {\n    <http://rdfh.ch/0806/Tr7j5V37TWOQjNgIJ6VKnA/values/KMb1IqYDRnmpQyy2dDs_JA> ?p ?o .\n}",
+    "metadata": {}
+  }
+]
