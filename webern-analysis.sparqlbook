@@ -12,15 +12,9 @@
     "metadata": {}
   },
   {
-    "kind": 1,
-    "language": "markdown",
-    "value": "# ANALYSIS OF THE STANDOFF TEXT VALUE",
-    "metadata": {}
-  },
-  {
     "kind": 2,
     "language": "sparql",
-    "value": "# Finding so far: There is a non-deleted resource with a richtext value that links to the resource that we want to delete.\n# THIS STANDOFF LINK TAG HAS A LINK TO THE RESOURCE THAT SHOULD BE DELETED\n\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX kb: <http://www.knora.org/ontology/knora-base#>\n\nSELECT * WHERE {\n    <http://rdfh.ch/0806/Tr7j5V37TWOQjNgIJ6VKnA/values/D0z8VcR3Qzi2K2BI3HPXKg/standoff/2> ?p ?o\n}\n",
+    "value": "# Finding so far: There is a non-deleted resource with a richtext value that links to the resource that we want to delete.\n# THIS STANDOFF LINK TAG HAS A LINK TO THE RESOURCE THAT SHOULD BE DELETED\n\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX kb: <http://www.knora.org/ontology/knora-base#>\nPREFIX webern: <http://www.knora.org/ontology/0806/webern-onto#>\n\nSELECT * WHERE {\n    <http://rdfh.ch/0806/Tr7j5V37TWOQjNgIJ6VKnA/values/D0z8VcR3Qzi2K2BI3HPXKg/standoff/2> ?p ?o\n}\n",
     "metadata": {}
   },
   {

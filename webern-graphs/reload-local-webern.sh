@@ -22,19 +22,19 @@ curl --request PUT \
 http://localhost:3030/knora-test/data?graph=http%3A%2F%2Fwww.knora.org%2Fdata%2Fadmin \
 --header 'Content-Type: text/turtle;encoding=UTF-8' \
 -u "admin:test" \
--T ~/Desktop/knora-admin-data.ttl
+-T reload-local-webern/knora-admin-data.ttl
 
 curl --request PUT \
 http://localhost:3030/knora-test/data?graph=http%3A%2F%2Fwww.knora.org%2Fontology%2F0806%2Fwebern-onto \
 --header 'Content-Type: text/turtle;encoding=UTF-8' \
 -u "admin:test" \
--T ~/Desktop/webern-onto.ttl
+-T reload-local-webern/webern-onto.ttl
 
 curl --request PUT \
 http://localhost:3030/knora-test/data?graph=http%3A%2F%2Fwww.knora.org%2Fdata%2F0806%2Fwebern \
 --header 'Content-Type: text/turtle;encoding=UTF-8' \
 -u "admin:test" \
--T ~/Desktop/webern-data.ttl
+-T reload-local-webern/webern-data.ttl
 
 
 # restart the api container
