@@ -1,80 +1,86 @@
 [
   {
-    "kind": 2,
-    "language": "sparql",
-    "value": "# RESOURCE TO BE DELETED\n\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX kb: <http://www.knora.org/ontology/knora-base#>\nPREFIX webern: <http://www.knora.org/ontology/0806/webern-onto#>\n\nSELECT * WHERE {\n    <http://rdfh.ch/0806/eD83lLUSSYCbEOb5B5cknQ> ?p ?o\n}",
+    "kind": 1,
+    "language": "markdown",
+    "value": "## Resource to be deleted",
     "metadata": {}
   },
   {
     "kind": 2,
     "language": "sparql",
-    "value": "# RESOURCE IS IN OBJECT POSITION OF\n\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX kb: <http://www.knora.org/ontology/knora-base#>\nPREFIX webern: <http://www.knora.org/ontology/0806/webern-onto#>\n\nSELECT * WHERE {\n    ?s a ?type ; \n        ?p <http://rdfh.ch/0806/eD83lLUSSYCbEOb5B5cknQ> .\n    OPTIONAL { ?s kb:isDeleted ?deleted }\n    FILTER (?p != rdf:subject)  # exclude reifications, where the resource is in subject position\n}",
-    "metadata": {}
-  },
-  {
-    "kind": 2,
-    "language": "sparql",
-    "value": "# Finding so far: There is a non-deleted resource with a richtext value that links to the resource that we want to delete.\n# THIS STANDOFF LINK TAG HAS A LINK TO THE RESOURCE THAT SHOULD BE DELETED\n\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX kb: <http://www.knora.org/ontology/knora-base#>\nPREFIX webern: <http://www.knora.org/ontology/0806/webern-onto#>\n\nSELECT * WHERE {\n    <http://rdfh.ch/0806/Tr7j5V37TWOQjNgIJ6VKnA/values/D0z8VcR3Qzi2K2BI3HPXKg/standoff/2> ?p ?o\n}\n",
-    "metadata": {}
-  },
-  {
-    "kind": 2,
-    "language": "sparql",
-    "value": "# SUBJECT IS THE TEXT VALUE WHERE THE PROBLEMATIC STANDOFF IS EMBEDDED\n# THE TEXT VALUE ITSELF IS NOT DELETED\n\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX kb: <http://www.knora.org/ontology/knora-base#>\nPREFIX ka: <http://www.knora.org/ontology/knora-admin#>\n\nSELECT ?s ?deleted ?prev WHERE {\n    ?s ?p <http://rdfh.ch/0806/Tr7j5V37TWOQjNgIJ6VKnA/values/D0z8VcR3Qzi2K2BI3HPXKg/standoff/2> .\n    ?s kb:previousValue ?prev .\n    ?s kb:isDeleted ?deleted .\n}\n",
-    "metadata": {}
-  },
-  {
-    "kind": 2,
-    "language": "sparql",
-    "value": "# Property of this value is :hasBiography\n\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX kb: <http://www.knora.org/ontology/knora-base#>\n\nSELECT ?prop WHERE {\n    ?res ?prop <http://rdfh.ch/0806/Tr7j5V37TWOQjNgIJ6VKnA/values/D0z8VcR3Qzi2K2BI3HPXKg>\n}",
-    "metadata": {}
-  },
-  {
-    "kind": 2,
-    "language": "sparql",
-    "value": "# THIS TEXT VALUE IS THE CURRENT VALUE AND CANNOT BE DELETED\n\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX kb: <http://www.knora.org/ontology/knora-base#>\nPREFIX ka: <http://www.knora.org/ontology/knora-admin#>\nPREFIX project: <http://www.knora.org/ontology/4123/testonto#>\n\nSELECT * WHERE {\n    <http://rdfh.ch/0806/Tr7j5V37TWOQjNgIJ6VKnA/values/kkJEdxkqRjOu6J8eveKR2Q> ?p ?o\n}",
+    "value": "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX kb: <http://www.knora.org/ontology/knora-base#>\nPREFIX webern: <http://www.knora.org/ontology/0806/webern-onto#>\n\nSELECT * WHERE {\n    <http://rdfh.ch/0806/eD83lLUSSYCbEOb5B5cknQ> ?p ?o\n}",
     "metadata": {}
   },
   {
     "kind": 1,
     "language": "markdown",
-    "value": "# ANALYSIS OF A LINK VALUE TO BE DELETED",
+    "value": "## The resource is in object position of...",
     "metadata": {}
   },
   {
     "kind": 2,
     "language": "sparql",
-    "value": "# EXAMPLE OF ONE OF THE LINK VALUES TO BE DELETED\n\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX kb: <http://www.knora.org/ontology/knora-base#>\nPREFIX ka: <http://www.knora.org/ontology/knora-admin#>\nPREFIX project: <http://www.knora.org/ontology/4123/testonto#>\n\nSELECT * WHERE {\n    <http://rdfh.ch/0806/Tr7j5V37TWOQjNgIJ6VKnA/values/KMb1IqYDRnmpQyy2dDs_JA> ?p ?o\n}",
-    "metadata": {}
-  },
-  {
-    "kind": 2,
-    "language": "sparql",
-    "value": "# SUBJECT REFERING TO THE LINK VALUE THAT MUST BE DELETED\n# SUBJECT ITSELF MUST NOT BE DELETED!\n\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX kb: <http://www.knora.org/ontology/knora-base#>\nPREFIX ka: <http://www.knora.org/ontology/knora-admin#>\nPREFIX project: <http://www.knora.org/ontology/4123/testonto#>\n\nSELECT * WHERE {\n    ?s a ?type ;\n         ?p <http://rdfh.ch/0806/Tr7j5V37TWOQjNgIJ6VKnA/values/KMb1IqYDRnmpQyy2dDs_JA>\n}",
+    "value": "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX kb: <http://www.knora.org/ontology/knora-base#>\nPREFIX webern: <http://www.knora.org/ontology/0806/webern-onto#>\n\nSELECT * WHERE {\n    ?s a ?type ; \n        ?p <http://rdfh.ch/0806/eD83lLUSSYCbEOb5B5cknQ> .\n    OPTIONAL { ?s kb:isDeleted ?deleted }\n    FILTER (?p != rdf:subject)  # exclude reifications, where the resource is in subject position\n}",
     "metadata": {}
   },
   {
     "kind": 1,
     "language": "markdown",
-    "value": "# THIRD LINK TO THE RESOURCE TO BE DELETED: http://rdfh.ch/0806/Tr7j5V37TWOQjNgIJ6VKnA/values/iZguyd0rRAO1rou7sBFLPA",
+    "value": "## There is a resource with 3 links to the resource that we want to delete\n\n1. <http://rdfh.ch/0806/Tr7j5V37TWOQjNgIJ6VKnA/values/KMb1IqYDRnmpQyy2dDs_JA>: a deleted LinkValue (predecessor of no. 2)\n2. <http://rdfh.ch/0806/Tr7j5V37TWOQjNgIJ6VKnA/values/iZguyd0rRAO1rou7sBFLPA>: a non-deleted LinkValue\n3. <http://rdfh.ch/0806/Tr7j5V37TWOQjNgIJ6VKnA/values/D0z8VcR3Qzi2K2BI3HPXKg>: a richtext value\n\n(1) is the predecessor of (2), but (2) cannot be found in the \n[API response](https://api.dasch.swiss/v2/resources/http%3A%2F%2Frdfh.ch%2F0806%2FTr7j5V37TWOQjNgIJ6VKnA).\n\nThe resource itself is NOT deleted:",
     "metadata": {}
   },
   {
     "kind": 2,
     "language": "sparql",
-    "value": "# THE LINK VALUE TO BE DELETED\n\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX kb: <http://www.knora.org/ontology/knora-base#>\nPREFIX ka: <http://www.knora.org/ontology/knora-admin#>\nPREFIX project: <http://www.knora.org/ontology/4123/testonto#>\n\nSELECT * WHERE {\n    <http://rdfh.ch/0806/Tr7j5V37TWOQjNgIJ6VKnA/values/iZguyd0rRAO1rou7sBFLPA> ?p ?o\n}",
+    "value": "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX kb: <http://www.knora.org/ontology/knora-base#>\nPREFIX webern: <http://www.knora.org/ontology/0806/webern-onto#>\n\nSELECT * WHERE {\n    <http://rdfh.ch/0806/Tr7j5V37TWOQjNgIJ6VKnA> a ?type .\n    <http://rdfh.ch/0806/Tr7j5V37TWOQjNgIJ6VKnA> kb:isDeleted ?deleted .\n}",
+    "metadata": {}
+  },
+  {
+    "kind": 1,
+    "language": "markdown",
+    "value": "# 1. & 2. The two LinkValues\n\nI assume that I can just erase all triples where they are in subject/object position?",
+    "metadata": {}
+  },
+  {
+    "kind": 1,
+    "language": "markdown",
+    "value": "# 3. The richtext value",
+    "metadata": {}
+  },
+  {
+    "kind": 1,
+    "language": "markdown",
+    "value": "## The richtext value is superseded (i.e. has been edited), but not deleted",
     "metadata": {}
   },
   {
     "kind": 2,
     "language": "sparql",
-    "value": "# SUBJECT OF THE LINK VALUE\n\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX kb: <http://www.knora.org/ontology/knora-base#>\nPREFIX ka: <http://www.knora.org/ontology/knora-admin#>\nPREFIX project: <http://www.knora.org/ontology/4123/testonto#>\n\nSELECT * WHERE {\n    ?s ?p <http://rdfh.ch/0806/Tr7j5V37TWOQjNgIJ6VKnA/values/iZguyd0rRAO1rou7sBFLPA>\n}",
+    "value": "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX kb: <http://www.knora.org/ontology/knora-base#>\nPREFIX webern: <http://www.knora.org/ontology/0806/webern-onto#>\n\nSELECT ?successor_val ?successor_val_is_deleted WHERE {\n    ?successor_val kb:previousValue <http://rdfh.ch/0806/Tr7j5V37TWOQjNgIJ6VKnA/values/D0z8VcR3Qzi2K2BI3HPXKg> .\n    ?successor_val kb:isDeleted ?successor_val_is_deleted .\n}\n",
+    "metadata": {}
+  },
+  {
+    "kind": 1,
+    "language": "markdown",
+    "value": "## Property of this value is :hasBiography",
     "metadata": {}
   },
   {
     "kind": 2,
     "language": "sparql",
-    "value": "",
+    "value": "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX kb: <http://www.knora.org/ontology/knora-base#>\nPREFIX webern: <http://www.knora.org/ontology/0806/webern-onto#>\n\nSELECT ?prop WHERE {\n    ?res ?prop <http://rdfh.ch/0806/Tr7j5V37TWOQjNgIJ6VKnA/values/kkJEdxkqRjOu6J8eveKR2Q>\n}",
+    "metadata": {}
+  },
+  {
+    "kind": 1,
+    "language": "markdown",
+    "value": "# What to do with the richtext value?\n\n- Delete all triples where the richtext value is contained\n- Then, the previous-values-chain has to be closed again, \n  i.e. <http://rdfh.ch/0806/Tr7j5V37TWOQjNgIJ6VKnA/values/kkJEdxkqRjOu6J8eveKR2Q> should be linked to its pre-pre-decessor <http://rdfh.ch/0806/Tr7j5V37TWOQjNgIJ6VKnA/values/PQ90XHTUQXm_sBWSNYNJew>\n- Delete all triples that contain one of the standoff-tags (0-6) <http://rdfh.ch/0806/Tr7j5V37TWOQjNgIJ6VKnA/values/D0z8VcR3Qzi2K2BI3HPXKg/standoff/0>",
+    "metadata": {}
+  },
+  {
+    "kind": 2,
+    "language": "sparql",
+    "value": "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX kb: <http://www.knora.org/ontology/knora-base#>\nPREFIX webern: <http://www.knora.org/ontology/0806/webern-onto#>\n\nSELECT * WHERE {\n    <http://rdfh.ch/0806/Tr7j5V37TWOQjNgIJ6VKnA/values/D0z8VcR3Qzi2K2BI3HPXKg> ?p ?o .\n}",
     "metadata": {}
   }
 ]

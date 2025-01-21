@@ -2,7 +2,7 @@
 
 # execute this script with 
 # chmod +x reload-local-webern.sh
-# ./reload-local-webern.sh
+# ./webern-graphs/reload-local-webern.sh
 
 # e: exit on error
 # u: treat unset variables as error
@@ -22,19 +22,19 @@ curl --request PUT \
 http://localhost:3030/knora-test/data?graph=http%3A%2F%2Fwww.knora.org%2Fdata%2Fadmin \
 --header 'Content-Type: text/turtle;encoding=UTF-8' \
 -u "admin:test" \
--T reload-local-webern/knora-admin-data.ttl
+-T webern-graphs/knora-admin-data.ttl
 
 curl --request PUT \
 http://localhost:3030/knora-test/data?graph=http%3A%2F%2Fwww.knora.org%2Fontology%2F0806%2Fwebern-onto \
 --header 'Content-Type: text/turtle;encoding=UTF-8' \
 -u "admin:test" \
--T reload-local-webern/webern-onto.ttl
+-T webern-graphs/webern-onto.ttl
 
 curl --request PUT \
 http://localhost:3030/knora-test/data?graph=http%3A%2F%2Fwww.knora.org%2Fdata%2F0806%2Fwebern \
 --header 'Content-Type: text/turtle;encoding=UTF-8' \
 -u "admin:test" \
--T reload-local-webern/webern-data.ttl
+-T webern-graphs/webern-data.ttl
 
 
 # restart the api container
