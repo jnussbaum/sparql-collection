@@ -2,7 +2,7 @@
   {
     "kind": 1,
     "language": "markdown",
-    "value": "## Resource to be deleted",
+    "value": "# Problem description\n\nThe resource <http://rdfh.ch/0806/eD83lLUSSYCbEOb5B5cknQ> should be deleted from prod,\nbut it cannot be done via API call. \n\nFirst, we have to remove the triples that refer to that resource with SPARQL-operations.\nThen, a regular API call can be done to delete the resource.",
     "metadata": {}
   },
   {
@@ -39,6 +39,12 @@
     "kind": 1,
     "language": "markdown",
     "value": "# 1. & 2. The two LinkValues\n\nI assume that I can just erase all triples where they are in subject/object position?",
+    "metadata": {}
+  },
+  {
+    "kind": 2,
+    "language": "sparql",
+    "value": "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX kb: <http://www.knora.org/ontology/knora-base#>\nPREFIX webern: <http://www.knora.org/ontology/0806/webern-onto#>\n\nSELECT * WHERE {\n    {<http://rdfh.ch/0806/Tr7j5V37TWOQjNgIJ6VKnA/values/KMb1IqYDRnmpQyy2dDs_JA> ?p1 ?o1}\n    UNION\n    {?s2 ?p2 <http://rdfh.ch/0806/Tr7j5V37TWOQjNgIJ6VKnA/values/KMb1IqYDRnmpQyy2dDs_JA>}\n    UNION\n    {<http://rdfh.ch/0806/Tr7j5V37TWOQjNgIJ6VKnA/values/iZguyd0rRAO1rou7sBFLPA> ?p3 ?o3}\n    UNION\n    {?s4 ?p4 <http://rdfh.ch/0806/Tr7j5V37TWOQjNgIJ6VKnA/values/iZguyd0rRAO1rou7sBFLPA>}\n}",
     "metadata": {}
   },
   {
