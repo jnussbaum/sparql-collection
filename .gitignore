@@ -1,4 +1,4 @@
 playground.sparqlbook
 .DS_Store
 warnings.log
-webern-graphs
+*.ttl
