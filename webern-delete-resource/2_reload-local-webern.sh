@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/opt/homebrew/bin/bash
 
 # execute this script with 
 # chmod +x ./path/to/script.sh
