@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
 # execute this script with 
-# chmod +x reload-local-webern.sh
-# ./webern-graphs/reload-local-webern.sh
+# chmod +x ./path/to/script.sh
+# ./path/to/script.sh
 
 # e: exit on error
 # u: treat unset variables as error
@@ -12,6 +12,7 @@ set -euo pipefail
 # debugging mode: print every command before execution
 set -x
 
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # restart the stack
 uvx dsp-tools stop-stack
@@ -22,19 +23,19 @@ curl --request PUT \
 http://localhost:3030/knora-test/data?graph=http%3A%2F%2Fwww.knora.org%2Fdata%2Fadmin \
 --header 'Content-Type: text/turtle;encoding=UTF-8' \
 -u "admin:test" \
--T webern-graphs/knora-admin-data.ttl
+-T "$SCRIPT_DIR/knora-admin-data.ttl"
 
 curl --request PUT \
 http://localhost:3030/knora-test/data?graph=http%3A%2F%2Fwww.knora.org%2Fontology%2F0806%2Fwebern-onto \
 --header 'Content-Type: text/turtle;encoding=UTF-8' \
 -u "admin:test" \
--T webern-graphs/webern-onto.ttl
+-T "$SCRIPT_DIR/webern-onto.ttl"
 
 curl --request PUT \
 http://localhost:3030/knora-test/data?graph=http%3A%2F%2Fwww.knora.org%2Fdata%2F0806%2Fwebern \
 --header 'Content-Type: text/turtle;encoding=UTF-8' \
 -u "admin:test" \
--T webern-graphs/webern-data.ttl
+-T "$SCRIPT_DIR/webern-data.ttl"
 
 
 # restart the api container
