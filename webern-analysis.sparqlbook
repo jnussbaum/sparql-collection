@@ -26,7 +26,7 @@
   {
     "kind": 1,
     "language": "markdown",
-    "value": "## There is a resource with 3 links to the resource that we want to delete\n\n1. <http://rdfh.ch/0806/Tr7j5V37TWOQjNgIJ6VKnA/values/KMb1IqYDRnmpQyy2dDs_JA>: a deleted LinkValue (predecessor of no. 2)\n2. <http://rdfh.ch/0806/Tr7j5V37TWOQjNgIJ6VKnA/values/iZguyd0rRAO1rou7sBFLPA>: a non-deleted LinkValue\n3. <http://rdfh.ch/0806/Tr7j5V37TWOQjNgIJ6VKnA/values/D0z8VcR3Qzi2K2BI3HPXKg>: a richtext value\n\n(1) is the predecessor of (2), but (2) cannot be found in the \n[API response](https://api.dasch.swiss/v2/resources/http%3A%2F%2Frdfh.ch%2F0806%2FTr7j5V37TWOQjNgIJ6VKnA).\n\nThe resource itself is NOT deleted:",
+    "value": "## Finding: There is 1 resource with 3 links to the resource that we want to delete\n\n1. <http://rdfh.ch/0806/Tr7j5V37TWOQjNgIJ6VKnA/values/KMb1IqYDRnmpQyy2dDs_JA>: a deleted LinkValue (predecessor of no. 2)\n2. <http://rdfh.ch/0806/Tr7j5V37TWOQjNgIJ6VKnA/values/iZguyd0rRAO1rou7sBFLPA>: a non-deleted LinkValue\n3. <http://rdfh.ch/0806/Tr7j5V37TWOQjNgIJ6VKnA/values/D0z8VcR3Qzi2K2BI3HPXKg>: a richtext value\n\n(1) is the predecessor of (2), but (2) cannot be found in the \n[API response](https://api.dasch.swiss/v2/resources/http%3A%2F%2Frdfh.ch%2F0806%2FTr7j5V37TWOQjNgIJ6VKnA).\n\n### The resource itself is NOT deleted:",
     "metadata": {}
   },
   {
@@ -74,13 +74,49 @@
   {
     "kind": 1,
     "language": "markdown",
-    "value": "# What to do with the richtext value?\n\n- Delete all triples where the richtext value is contained\n- Then, the previous-values-chain has to be closed again, \n  i.e. <http://rdfh.ch/0806/Tr7j5V37TWOQjNgIJ6VKnA/values/kkJEdxkqRjOu6J8eveKR2Q> should be linked to its pre-pre-decessor <http://rdfh.ch/0806/Tr7j5V37TWOQjNgIJ6VKnA/values/PQ90XHTUQXm_sBWSNYNJew>\n- Delete all triples that contain one of the standoff-tags (0-6) <http://rdfh.ch/0806/Tr7j5V37TWOQjNgIJ6VKnA/values/D0z8VcR3Qzi2K2BI3HPXKg/standoff/0>",
+    "value": "# What to do with the richtext value?\n\n## 1. Delete all triples where the richtext value is contained",
     "metadata": {}
   },
   {
     "kind": 2,
     "language": "sparql",
-    "value": "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX kb: <http://www.knora.org/ontology/knora-base#>\nPREFIX webern: <http://www.knora.org/ontology/0806/webern-onto#>\n\nSELECT * WHERE {\n    <http://rdfh.ch/0806/Tr7j5V37TWOQjNgIJ6VKnA/values/D0z8VcR3Qzi2K2BI3HPXKg> ?p ?o .\n}",
+    "value": "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX kb: <http://www.knora.org/ontology/knora-base#>\nPREFIX webern: <http://www.knora.org/ontology/0806/webern-onto#>\n\nSELECT * WHERE {\n    {<http://rdfh.ch/0806/Tr7j5V37TWOQjNgIJ6VKnA/values/D0z8VcR3Qzi2K2BI3HPXKg> ?p1 ?o1} \n    UNION\n    {?s2 ?p2 <http://rdfh.ch/0806/Tr7j5V37TWOQjNgIJ6VKnA/values/D0z8VcR3Qzi2K2BI3HPXKg>}\n}",
+    "metadata": {}
+  },
+  {
+    "kind": 1,
+    "language": "markdown",
+    "value": "## 2. Then, the previous-values-chain has to be closed again\ni.e. <http://rdfh.ch/0806/Tr7j5V37TWOQjNgIJ6VKnA/values/kkJEdxkqRjOu6J8eveKR2Q> should be linked to its pre-pre-decessor <http://rdfh.ch/0806/Tr7j5V37TWOQjNgIJ6VKnA/values/PQ90XHTUQXm_sBWSNYNJew>",
+    "metadata": {}
+  },
+  {
+    "kind": 2,
+    "language": "sparql",
+    "value": "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX kb: <http://www.knora.org/ontology/knora-base#>\nPREFIX webern: <http://www.knora.org/ontology/0806/webern-onto#>\n\nSELECT * WHERE {\n    <http://rdfh.ch/0806/Tr7j5V37TWOQjNgIJ6VKnA/values/D0z8VcR3Qzi2K2BI3HPXKg> kb:previousValue ?predecessor .\n    ?successor kb:previousValue <http://rdfh.ch/0806/Tr7j5V37TWOQjNgIJ6VKnA/values/D0z8VcR3Qzi2K2BI3HPXKg> .\n}",
+    "metadata": {}
+  },
+  {
+    "kind": 1,
+    "language": "markdown",
+    "value": "## 3. Delete all triples that contain one of the standoff-tags \n\nThere are 7 standoff tags:",
+    "metadata": {}
+  },
+  {
+    "kind": 2,
+    "language": "sparql",
+    "value": "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX kb: <http://www.knora.org/ontology/knora-base#>\nPREFIX webern: <http://www.knora.org/ontology/0806/webern-onto#>\n\nSELECT * WHERE {\n    <http://rdfh.ch/0806/Tr7j5V37TWOQjNgIJ6VKnA/values/D0z8VcR3Qzi2K2BI3HPXKg> kb:valueHasStandoff ?standoff_tag .\n}",
+    "metadata": {}
+  },
+  {
+    "kind": 1,
+    "language": "markdown",
+    "value": "And that's how they are interconnected:",
+    "metadata": {}
+  },
+  {
+    "kind": 2,
+    "language": "sparql",
+    "value": "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX kb: <http://www.knora.org/ontology/knora-base#>\nPREFIX webern: <http://www.knora.org/ontology/0806/webern-onto#>\n\nSELECT * WHERE {\n    {<http://rdfh.ch/0806/Tr7j5V37TWOQjNgIJ6VKnA/values/D0z8VcR3Qzi2K2BI3HPXKg/standoff/0> ?p ?o}\n    UNION\n    {?s ?p <http://rdfh.ch/0806/Tr7j5V37TWOQjNgIJ6VKnA/values/D0z8VcR3Qzi2K2BI3HPXKg/standoff/0>}\n}",
     "metadata": {}
   }
 ]
