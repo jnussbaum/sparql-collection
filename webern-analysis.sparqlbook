@@ -8,7 +8,7 @@
   {
     "kind": 2,
     "language": "sparql",
-    "value": "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX kb: <http://www.knora.org/ontology/knora-base#>\nPREFIX webern: <http://www.knora.org/ontology/0806/webern-onto#>\n\nSELECT * WHERE {\n    <http://rdfh.ch/0806/eD83lLUSSYCbEOb5B5cknQ> ?p ?o\n}",
+    "value": "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX kb: <http://www.knora.org/ontology/knora-base#>\nPREFIX webern: <http://www.knora.org/ontology/0806/webern-onto#>\n\nSELECT * WHERE {\n        <http://rdfh.ch/0806/eD83lLUSSYCbEOb5B5cknQ> ?p ?o\n    }",
     "metadata": {}
   },
   {
@@ -92,13 +92,13 @@
   {
     "kind": 1,
     "language": "markdown",
-    "value": "## 2. Then, the previous-values-chain has to be closed again\ni.e. <http://rdfh.ch/0806/Tr7j5V37TWOQjNgIJ6VKnA/values/kkJEdxkqRjOu6J8eveKR2Q> should be linked to its pre-pre-decessor <http://rdfh.ch/0806/Tr7j5V37TWOQjNgIJ6VKnA/values/PQ90XHTUQXm_sBWSNYNJew>",
+    "value": "## 2. Then, the previous-values-chain has to be closed again\ni.e. <http://rdfh.ch/0806/Tr7j5V37TWOQjNgIJ6VKnA/values/kkJEdxkqRjOu6J8eveKR2Q> should be linked to its pre-pre-decessor \n<http://rdfh.ch/0806/Tr7j5V37TWOQjNgIJ6VKnA/values/PQ90XHTUQXm_sBWSNYNJew>",
     "metadata": {}
   },
   {
     "kind": 2,
     "language": "sparql",
-    "value": "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX kb: <http://www.knora.org/ontology/knora-base#>\nPREFIX webern: <http://www.knora.org/ontology/0806/webern-onto#>\n\nSELECT * WHERE {\n    <http://rdfh.ch/0806/Tr7j5V37TWOQjNgIJ6VKnA/values/D0z8VcR3Qzi2K2BI3HPXKg> kb:previousValue ?predecessor .\n    ?successor kb:previousValue <http://rdfh.ch/0806/Tr7j5V37TWOQjNgIJ6VKnA/values/D0z8VcR3Qzi2K2BI3HPXKg> .\n}",
+    "value": "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX kb: <http://www.knora.org/ontology/knora-base#>\nPREFIX webern: <http://www.knora.org/ontology/0806/webern-onto#>\n\nSELECT * WHERE {\n    ?successor kb:previousValue <http://rdfh.ch/0806/Tr7j5V37TWOQjNgIJ6VKnA/values/D0z8VcR3Qzi2K2BI3HPXKg> .\n    <http://rdfh.ch/0806/Tr7j5V37TWOQjNgIJ6VKnA/values/D0z8VcR3Qzi2K2BI3HPXKg> kb:previousValue ?predecessor .\n}",
     "metadata": {}
   },
   {
@@ -122,7 +122,7 @@
   {
     "kind": 2,
     "language": "sparql",
-    "value": "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX kb: <http://www.knora.org/ontology/knora-base#>\nPREFIX webern: <http://www.knora.org/ontology/0806/webern-onto#>\n\nSELECT * WHERE {\n    {<http://rdfh.ch/0806/Tr7j5V37TWOQjNgIJ6VKnA/values/D0z8VcR3Qzi2K2BI3HPXKg/standoff/0> ?p ?o}\n    UNION\n    {?s ?p <http://rdfh.ch/0806/Tr7j5V37TWOQjNgIJ6VKnA/values/D0z8VcR3Qzi2K2BI3HPXKg/standoff/0>}\n}",
+    "value": "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX kb: <http://www.knora.org/ontology/knora-base#>\nPREFIX webern: <http://www.knora.org/ontology/0806/webern-onto#>\n\nSELECT * WHERE {\n    <http://rdfh.ch/0806/Tr7j5V37TWOQjNgIJ6VKnA/values/D0z8VcR3Qzi2K2BI3HPXKg> kb:valueHasStandoff ?standoff_tag .\n    {?standoff_tag ?p1 ?o}\n    UNION\n    {?s ?p2 ?standoff_tag}\n}",
     "metadata": {}
   }
 ]

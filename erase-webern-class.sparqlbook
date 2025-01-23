@@ -1,14 +1,50 @@
 [
   {
-    "kind": 2,
-    "language": "sparql",
-    "value": "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX kb: <http://www.knora.org/ontology/knora-base#>\n\nSELECT ?res ?p ?type WHERE {\n  GRAPH <http://www.knora.org/data/0806/webern> {\n    ?res a ?type .\n    ?res ?p <http://rdfh.ch/0806/eD83lLUSSYCbEOb5B5cknQ> .\n  }\n}",
+    "kind": 1,
+    "language": "markdown",
+    "value": "# Erase the links pointing to <http://rdfh.ch/0806/eD83lLUSSYCbEOb5B5cknQ>\n\n## 1. Erase the 2 LinkValues\n\nErase all triples where the 2 LinkValues are in subject/object position",
     "metadata": {}
   },
   {
     "kind": 2,
     "language": "sparql",
-    "value": "SELECT ?p ?o WHERE {\n    <http://rdfh.ch/0806/Tr7j5V37TWOQjNgIJ6VKnA/values/KMb1IqYDRnmpQyy2dDs_JA> ?p ?o .\n}",
+    "value": "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX kb: <http://www.knora.org/ontology/knora-base#>\nPREFIX webern: <http://www.knora.org/ontology/0806/webern-onto#>\n\nDELETE * WHERE {\n    {<http://rdfh.ch/0806/Tr7j5V37TWOQjNgIJ6VKnA/values/KMb1IqYDRnmpQyy2dDs_JA> ?p1 ?o1}\n    UNION\n    {?s2 ?p2 <http://rdfh.ch/0806/Tr7j5V37TWOQjNgIJ6VKnA/values/KMb1IqYDRnmpQyy2dDs_JA>}\n    UNION\n    {<http://rdfh.ch/0806/Tr7j5V37TWOQjNgIJ6VKnA/values/iZguyd0rRAO1rou7sBFLPA> ?p3 ?o3}\n    UNION\n    {?s4 ?p4 <http://rdfh.ch/0806/Tr7j5V37TWOQjNgIJ6VKnA/values/iZguyd0rRAO1rou7sBFLPA>}\n}",
+    "metadata": {}
+  },
+  {
+    "kind": 1,
+    "language": "markdown",
+    "value": "## 2. Take care of the richtext value\n### 2.1. Delete all triples where the richtext value is contained",
+    "metadata": {}
+  },
+  {
+    "kind": 2,
+    "language": "sparql",
+    "value": "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX kb: <http://www.knora.org/ontology/knora-base#>\nPREFIX webern: <http://www.knora.org/ontology/0806/webern-onto#>\n\nDELETE * WHERE {\n    {<http://rdfh.ch/0806/Tr7j5V37TWOQjNgIJ6VKnA/values/D0z8VcR3Qzi2K2BI3HPXKg> ?p1 ?o1} \n    UNION\n    {?s2 ?p2 <http://rdfh.ch/0806/Tr7j5V37TWOQjNgIJ6VKnA/values/D0z8VcR3Qzi2K2BI3HPXKg>}\n}",
+    "metadata": {}
+  },
+  {
+    "kind": 1,
+    "language": "markdown",
+    "value": "### 2.2. Close the previous-values-chain\n<http://rdfh.ch/0806/Tr7j5V37TWOQjNgIJ6VKnA/values/kkJEdxkqRjOu6J8eveKR2Q> should be linked to its pre-pre-decessor \n<http://rdfh.ch/0806/Tr7j5V37TWOQjNgIJ6VKnA/values/PQ90XHTUQXm_sBWSNYNJew>",
+    "metadata": {}
+  },
+  {
+    "kind": 2,
+    "language": "sparql",
+    "value": "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX kb: <http://www.knora.org/ontology/knora-base#>\nPREFIX webern: <http://www.knora.org/ontology/0806/webern-onto#>\n\nINSERT DATA {\n    GRAPH <http://www.knora.org/data/0806/webern> {\n        <http://rdfh.ch/0806/Tr7j5V37TWOQjNgIJ6VKnA/values/kkJEdxkqRjOu6J8eveKR2Q> kb:previousValue <http://rdfh.ch/0806/Tr7j5V37TWOQjNgIJ6VKnA/values/PQ90XHTUQXm_sBWSNYNJew>\n    }\n}",
+    "metadata": {}
+  },
+  {
+    "kind": 1,
+    "language": "markdown",
+    "value": "### 2.3. Delete all triples that contain one of the standoff-tags",
+    "metadata": {}
+  },
+  {
+    "kind": 2,
+    "language": "sparql",
+    "value": "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX kb: <http://www.knora.org/ontology/knora-base#>\nPREFIX webern: <http://www.knora.org/ontology/0806/webern-onto#>\n\nDELETE * WHERE {\n    <http://rdfh.ch/0806/Tr7j5V37TWOQjNgIJ6VKnA/values/D0z8VcR3Qzi2K2BI3HPXKg> kb:valueHasStandoff ?standoff_tag .\n    {?standoff_tag ?p1 ?o}\n    UNION\n    {?s ?p2 ?standoff_tag}\n}",
     "metadata": {}
   }
 ]
