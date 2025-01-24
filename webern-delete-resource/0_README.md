@@ -13,7 +13,7 @@ Steps to analyse on localhost:
 - SPARQL Notebook: connect with localhost
 - run the queries of `3_webern-analysis.sparqlbook`
 - run the queries of `4_webern-tidyup.sparqlbook`
-- `./5_delete_resclass.sh http://0.0.0.0:3333 root@example.com test`
+- `./5_delete_resclass.sh "http://0.0.0.0:3333" "$DASCH_MAIL" "$PROD_PW"`
 
 Steps on Prod (only do that once you're sure!):
 
