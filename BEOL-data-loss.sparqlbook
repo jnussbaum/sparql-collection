@@ -1,0 +1,80 @@
+[
+  {
+    "kind": 1,
+    "language": "markdown",
+    "value": "# Investigate DB size issue after BEOL graph replacement (DEV-4884)\n\nInvestigate why prod db backup plunged from 10.9 GB to 7.7 GB after BEOL graph replacement.\n\n## Count triples in all graphs",
+    "metadata": {}
+  },
+  {
+    "kind": 2,
+    "language": "sparql",
+    "value": "SELECT ?g (COUNT(?s) AS ?tripleCount)\nWHERE {\n  GRAPH ?g {?s ?p ?o}\n}\nGROUP BY ?g ?tripleCount",
+    "metadata": {}
+  },
+  {
+    "kind": 1,
+    "language": "markdown",
+    "value": "## Société Savoie: Resources that were created/modified on 2025-04-28\n\nThe data graph of Société Savoie has grown by 2700 triples on 2025-04-28.",
+    "metadata": {}
+  },
+  {
+    "kind": 2,
+    "language": "sparql",
+    "value": "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\nPREFIX knora-admin: <http://www.knora.org/ontology/knora-admin#>\nPREFIX kb: <http://www.knora.org/ontology/knora-base#>\n\nSELECT * WHERE {\n    GRAPH <http://www.knora.org/data/0121/societe-savoie> {\n        ?s kb:creationDate ?creationDateTime .\n        FILTER(\n            xsd:date(?creationDateTime) = \"2025-04-28Z\"^^xsd:date\n        ) .\n    }\n}",
+    "metadata": {}
+  },
+  {
+    "kind": 2,
+    "language": "sparql",
+    "value": "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\nPREFIX knora-admin: <http://www.knora.org/ontology/knora-admin#>\nPREFIX kb: <http://www.knora.org/ontology/knora-base#>\n\nSELECT * WHERE {\n    GRAPH <http://www.knora.org/data/0121/societe-savoie> {\n        ?s kb:lastModificationDate ?lmdDateTime .\n        FILTER(\n            xsd:date(?lmdDateTime) = \"2025-04-28Z\"^^xsd:date\n        ) .\n    }\n}",
+    "metadata": {}
+  },
+  {
+    "kind": 2,
+    "language": "sparql",
+    "value": "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\nPREFIX knora-admin: <http://www.knora.org/ontology/knora-admin#>\nPREFIX kb: <http://www.knora.org/ontology/knora-base#>\n\nSELECT ?res ?resCreationDate WHERE {\n    GRAPH <http://www.knora.org/data/0121/societe-savoie> {\n        ?val kb:valueCreationDate ?valueCreationDate .\n        FILTER(\n            xsd:date(?valueCreationDate) = \"2025-04-28Z\"^^xsd:date\n        ) .\n        ?res ?p ?val ;\n             kb:creationDate ?resCreationDate .\n        # FILTER(\n        #     xsd:date(?resCreationDate) != \"2025-04-28Z\"^^xsd:date\n        # ) .\n    }\n}\nLIMIT 10",
+    "metadata": {}
+  },
+  {
+    "kind": 1,
+    "language": "markdown",
+    "value": "## Count direct resource triples of these 5 resources: 56",
+    "metadata": {}
+  },
+  {
+    "kind": 2,
+    "language": "sparql",
+    "value": "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\nPREFIX knora-admin: <http://www.knora.org/ontology/knora-admin#>\nPREFIX kb: <http://www.knora.org/ontology/knora-base#>\n\nSELECT (COUNT(*) as ?counter) WHERE {\n    GRAPH <http://www.knora.org/data/0121/societe-savoie> {\n        VALUES ?res {\n            <http://rdfh.ch/0121/QMpOmDtnRZyzYp1ikYvpoA>\n            <http://rdfh.ch/0121/CrZaFPhoTVWzQheJ7RilCQ>\n            <http://rdfh.ch/0121/xlkHiJeMTsCu0DR9U2GPUw>\n            <http://rdfh.ch/0121/olnIIB8eSdinTbZA0X6srg>\n            <http://rdfh.ch/0121/fR88BcAaSbihAwXoNiHmPA>\n        }\n        ?res ?p ?o\n    }\n}\nGROUP BY ?val",
+    "metadata": {}
+  },
+  {
+    "kind": 1,
+    "language": "markdown",
+    "value": "## Count value triples of the 5 resources: 164",
+    "metadata": {}
+  },
+  {
+    "kind": 2,
+    "language": "sparql",
+    "value": "\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX kb: <http://www.knora.org/ontology/knora-base#>\nPREFIX owl: <http://www.w3.org/2002/07/owl#>\n\nSELECT (COUNT(*) as ?count) WHERE {\n  VALUES ?res {\n    <http://rdfh.ch/0121/QMpOmDtnRZyzYp1ikYvpoA>\n    <http://rdfh.ch/0121/CrZaFPhoTVWzQheJ7RilCQ>\n    <http://rdfh.ch/0121/xlkHiJeMTsCu0DR9U2GPUw>\n    <http://rdfh.ch/0121/olnIIB8eSdinTbZA0X6srg>\n    <http://rdfh.ch/0121/fR88BcAaSbihAwXoNiHmPA>\n  }\n  \n  ?res ?p ?val .\n  ?val ?valprop ?valobj \n\n  # filter out direct links because they bring us to other resources\n  # and we don't want to traverse things outgoing from other resources\n  FILTER NOT EXISTS {\n    ?val a ?otype.\n    ?otype rdfs:subClassOf* kb:Resource\n  }\n  \n  # filter out triples that go to ontology, user, project\n  FILTER (?p != rdf:type)\n  FILTER (?p != kb:attachedToProject)\n  FILTER (?p != kb:attachedToUser)\n}",
+    "metadata": {}
+  },
+  {
+    "kind": 1,
+    "language": "markdown",
+    "value": "## Count standoff tag triples of the 5 resources: 66",
+    "metadata": {}
+  },
+  {
+    "kind": 2,
+    "language": "sparql",
+    "value": "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX kb: <http://www.knora.org/ontology/knora-base#>\nPREFIX owl: <http://www.w3.org/2002/07/owl#>\n\nSELECT (COUNT(*) as ?count) WHERE {\n  VALUES ?res {\n    <http://rdfh.ch/0121/QMpOmDtnRZyzYp1ikYvpoA>\n    <http://rdfh.ch/0121/CrZaFPhoTVWzQheJ7RilCQ>\n    <http://rdfh.ch/0121/xlkHiJeMTsCu0DR9U2GPUw>\n    <http://rdfh.ch/0121/olnIIB8eSdinTbZA0X6srg>\n    <http://rdfh.ch/0121/fR88BcAaSbihAwXoNiHmPA>\n  }\n  \n  ?res ?p ?val .\n  \n  # filter out direct links because they bring us to other resources\n  # and we don't want to traverse things outgoing from other resources\n  FILTER NOT EXISTS {\n    ?val a ?otype.\n    ?otype rdfs:subClassOf* kb:Resource\n  }\n  \n  ?val kb:valueHasStandoff ?standoff .\n  \n  ?standoff ?x ?y .\n  \n  # filter out triples that go to ontology, user, project\n  FILTER (?p != rdf:type)\n  FILTER (?p != kb:attachedToProject)\n  FILTER (?p != kb:attachedToUser)\n}",
+    "metadata": {}
+  },
+  {
+    "kind": 1,
+    "language": "markdown",
+    "value": "## SUM: ca. 300 triples",
+    "metadata": {}
+  }
+]
